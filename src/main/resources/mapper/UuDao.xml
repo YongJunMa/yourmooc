@@ -1,0 +1,16 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.kite3.dao.UuDao">
+
+	<select id="queryById" resultType="Uu" parameterType="int">
+		SELECT *
+		FROM Uu WHERE tid = #{tid}
+	</select>
+
+	<select id="queryAll" resultType="Uu">
+		SELECT * FROM Uu
+	</select>
+
+</mapper>
