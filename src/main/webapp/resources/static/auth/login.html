@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="utf-8">
+	<head>
+	    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
+		<meta name="keywords" content="">
+		<meta name="description" content="">
+		<title>登录</title>
+		
+		<link href="../../css/bootstrap.min.css" rel="stylesheet"/>
+		<link href="../../css/reset.css" rel="stylesheet"/>
+		<script src="../../js/jquery-1.11.3.min.js"></script>
+		<script src="../../js/bootstrap.min.js"></script>
+		
+		<!--[if lt IE 9]>
+		  <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+		  <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+		<!-- 头部-start -->
+		<div class="f-header">
+			<div class="f-header-box clearfix">
+				<a href=".."  class="logo" title="网校在线学习平台"></a>
+				<nav class="header-nav">
+					<a href=".." class="header-nav-item">首 页</a>
+					<a href="../course/list.html" class="header-nav-item">课 程</a>
+					<a href="../user/home.html" class="header-nav-item">我的</a>
+					<a href="../opt/index.html"  style="width:100px;" target="_blank" class="header-nav-item">运营CMS</a>
+				</nav>
+				
+				<nav class="header-nav" style="float:right">
+					<a href="#myModal" class="header-nav-item"  data-toggle="modal" onclick="login();"  style="margin-right:0px;font-size:14px;">登录</a>
+					<a href="../auth/register.html" class="header-nav-item"   style="margin-left:0px;font-size:14px;">注册</a>
+			        <a href="#" class="header-nav-item"  style="margin-left:0px;font-size:14px;" id="userdetail">头像</a>
+				</nav>
+			</div>
+		</div>
+		<script type="text/javascript">
+			function login(){
+				$('#loginTitle').css('color','#337Ab7');
+				$('#loginForm').show();
+				$('#registeTitle').css('color','#000');
+				$('#registeForm').hide();
+			}
+			function registe(){
+				$('#loginTitle').css('color','#000');
+				$('#loginForm').hide();
+				$('#registeTitle').css('color','#337Ab7');
+				$('#registeForm').show();
+			}
+			$(function(){
+				$("#userdetail").popover({
+		            trigger:'manual',
+		            placement : 'bottom',
+		            html: 'true',
+		            content : '<div style="width:300px;height:300px;"></div>',
+		            animation: false
+		        }).on("mouseenter", function () {
+		            var _this = this;
+		            $(this).popover("show");
+		            $(this).siblings(".popover").on("mouseleave", function () {
+		                $(_this).popover('hide');
+		            });
+		        }).on("mouseleave", function () {
+		            var _this = this;
+		            setTimeout(function () {
+		                if (!$(".popover:hover").length) {
+		                    $(_this).popover("hide")
+		                }
+		            }, 0);
+		        });
+				//课程分类展示 
+				$(".category").popover({
+		            trigger:'manual',
+		            placement : 'right',
+		            html: 'true',
+		            content : '',
+		            animation: false
+		        }).on("mouseenter", function () {
+		            var cid = $(this).attr('c-id');
+		            $('#' + cid).show();
+		            $('#' + cid).hover(function(){
+		            	$('#' + cid).show();
+		            },function(){
+		            	$('#' + cid).hide();
+					});
+		        }).on("mouseleave", function () {
+		            var cid = $(this).attr('c-id');
+		            $('#' + cid).hide();
+		        });
+			});
+		</script>
+		<!-- 头部-end -->
+		
+		<div class="f-main">
+			<div class="types-block clearfix" style="text-align: center;">
+				<h3 class="types-title">登录</h3>
+				<form class="oc-form" id="infoForm" style="text-align: center;border: 1px solid #CCC;width: 600px;margin:0 auto;padding:20px;" method="post" action="#">
+					<!-- <li>请用：wangyangming/11111 登录</li> -->
+					<li><label>用户名</label> 
+						<input name="username"  value="" type="text"  class="input-text"  placeholder="请输入用户名" >
+					</li>
+					<li><label>密码</label> 
+						<input id="password" name="password" type="password" class="input-text" placeholder="请输入密码" autocomplete="off" />
+					</li>
+					<li><label>验证码</label> 
+					<input id="identiryCode" name="identiryCode" maxlength="6" class="input-text" type="text" style="width: 150px;" placeholder="请输入验证码"/>
+					<a class="vali-base"><img  onclick="reloadIndityImg('indeityImgLogin');" id="indeityImgLogin"  src="#" style="width:80px;height:40px;float:left;margin-left:10px;"/></a>
+					</li>
+					<li>
+						<label style="background-color:#FFF;"></label> 
+                       	<input type="checkbox" value="1" id="checkbox1" name="rememberMe" style="float: left;">
+                       	<span class="text"  style="float: left;margin-left:2px;">下次自动登录</span>
+                  	</li>
+					
+					<!-- <#if errcode ?? && errcode == 1>
+					<li style="text-align: left;">
+						<label style="background-color:#FFF;"></label>
+						<span style="color:red;">请输入正确的验证码</span>
+					</li>
+					</#if>
+					<#if errcode ?? && errcode == 2>
+					<li style="text-align: left;">
+						<label style="background-color:#FFF;"></label>
+						<span style="color:red;">用户名密码错</span>
+					</li>
+					</#if> -->
+					
+					<li class="clearfix" style="margin-top: 20px;">
+						<input type="submit" value="登录" class="btn"style="margin-right:20px;">
+						<div class="btn" onclick="window.location.href='${s.base}/auth/register.html'">注册</div>
+					</li>
+				</form>
+			</div>
+		</div>
+		
+		<div class="f-footer">
+	<div class="f-footer-box clearfix">
+		
+		<div class="footer-link">
+			<a href="javascript:void(0);"  target="_blank" title="企业合作">企业合作</a> 
+			<a href="javascript:void(0);" target="_blank" title="联系我们">联系我们</a> 
+			<a href="javascript:void(0);" target="_blank" title="常见问题">常见问题</a> 
+			<a href="javascript:void(0);" target="_blank" title="意见反馈">意见反馈</a>
+			<a href="javascript:void(0);" target="_blank" title="友情链接">友情链接</a>
+		</div>
+		
+		<div class="footer-copyright">
+			<span>©&nbsp;2017&nbsp; 备案 </span>
+		</div>
+		
+	</div>
+</div>
+				
+	</body>
+	
+</html>
